@@ -1,0 +1,19 @@
+t1 ansible_host=192.168.82.11 ansible_connection=ssh
+t2 ansible_host=192.168.82.12 ansible_connection=ssh
+
+[test]
+t1
+t2
+
+[ws]
+t1
+
+[wa]
+t2
+
+[test:vars]
+ansible_ssh_pass=VMware1!
+ansible_user=root
+
+
+
