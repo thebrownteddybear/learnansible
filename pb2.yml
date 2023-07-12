@@ -3,21 +3,5 @@
   hosts: ws
   tasks:
     - name: run data cmd
-      command: date
-    - name: shell cmd
-      shell: "uptime -p"
-      register: uptime
-    - name: list last 2 lines of /var/log/messages
-      command: tail -2 /etc/machine-id
-      register: mi
-    - debug:
-        msg: "{{uptime.stdout_lines}} {{mi.stdout_lines}}"
+      script: ws.sh
 
-
-
--
-  name: wa
-  hosts: wa
-  tasks:
-    - name: run data cmd
-      command: date
