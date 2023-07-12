@@ -1,0 +1,10 @@
+-
+  name: play on group test
+  hosts: test 
+  vars:
+    gns: 9.8.8.8
+  tasks:
+    - name: add google dns
+      lineinfile:
+        path: /etc/resolv.conf
+        line: 'nameserver {{gns}}'
