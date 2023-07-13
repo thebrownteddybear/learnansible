@@ -2,10 +2,38 @@
   name: play on group test
   hosts: test 
   vars:
-    gns: 9.8.8.8
+    _gns: 9.8.8.8
+    _dns_ip: 8.8.8.8
+    _dns_test: test
   tasks:
-    - name: add google dns
+    - name: if regex found, delete it
       lineinfile:
         path: /etc/resolv.conf
-        regexp: 'nameserver {{gns}}'
+        regexp: 'nameserver {{_gns}}'
         state: absent
+    - name: echo host or group variable 
+      command: "echo {{_dns_ip}}"
+      register: msg1
+    - name: add dns if missing
+      lineinfile:
+        path: /etc/resolv.conf
+        line: "nameserver {{_dns_ip}}"
+        create: yes
+    - name: if regex found, delete it 
+      lineinfile:
+        path: /etc/resolv.conf
+        regexp: "nameserver {{_dns_test}}"
+        state: absent 
+    - name: if regex found, delete it
+      lineinfile:
+        path: /etc/resolv1.conf
+        regexp: "nameserver {{_dns_test}}"
+        state: absent          
+    - name: if regex found, replace with "line"
+      lineinfile:
+        path: /etc/resolv1.conf
+        regexp: "nameserver {{_dns_ip}}"
+        line: nameserver test
+
+    - debug:
+        msg: "{{msg1.stdout_lines}}"
