@@ -1,2 +1,0 @@
-# learnansible
-learning ansible seriously
