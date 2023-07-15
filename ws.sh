@@ -1,2 +1,5 @@
 #!/bin/bash
-curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && chmod 644 /usr/share/keyrings/wazuh.gpg
+cd /root
+curl -sO https://packages.wazuh.com/4.4/wazuh-certs-tool.sh
+curl -sO https://packages.wazuh.com/4.4/config.yml
+

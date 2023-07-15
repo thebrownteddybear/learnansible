@@ -5,6 +5,16 @@
   vars:
     dns_test: test
   tasks:
+    - name: remove dashboard
+      shell: apt-get remove --purge wazuh-dashboard -y
+    - name: remove wazuh server
+      shell: apt-get remove --purge wazuh-manager -y
+    - name: Disable the Wazuh manager service.
+      shell: systemctl disable wazuh-manager; systemctl daemon-reload
+    - name: Remove the Filebeat installation.
+      shell: apt-get remove --purge filebeat -y
+    - name: Uninstall the Wazuh indexer
+      shell: apt-get remove --purge wazuh-indexer -y
 
     - name: Install the GPG key
       shell: "curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && chmod 644 /usr/share/keyrings/wazuh.gpg"
@@ -36,6 +46,7 @@
       shell: curl -sO https://packages.wazuh.com/4.4/wazuh-install.sh
     - name: --wazuh-dashboard
       shell: bash wazuh-install.sh --wazuh-dashboard dashboard
+
     - name: password
       shell: 'curl -k -u admin:admin https://{{ansible_default_ipv4.address}}'
       register: pass1

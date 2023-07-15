@@ -1,6 +1,6 @@
 - 
   name: play on wazuh
-  hosts: wa 
+  hosts: test 
   gather_facts: yes
   vars:
     dns_test: test
@@ -16,39 +16,3 @@
     - name: Uninstall the Wazuh indexer
       shell: apt-get remove --purge wazuh-indexer -y
 
-    - name: Install the GPG key
-      shell: "curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && chmod 644 /usr/share/keyrings/wazuh.gpg"
-    - name: Add the repository
-      shell: echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | tee -a /etc/apt/sources.list.d/wazuh.list
-    - name: update repo
-      shell: apt-get update
-    - name: Download the Wazuh installation assistant and the configuration file 
-      shell: curl -sO https://packages.wazuh.com/4.4/wazuh-install.sh; curl -sO https://packages.wazuh.com/4.4/config.yml
-    - name: replace replace module replaces globally, lininfile singly match, need .* 
-      replace:
-        path: /root/config.yml
-        regexp: '\<.*\>'
-        replace: "{{ansible_default_ipv4.address}}"
-    - name: Run the assistant with the option --generate-config-files
-      shell: bash wazuh-install.sh --generate-config-files
-    - name: indexer 
-      shell: curl -sO https://packages.wazuh.com/4.4/wazuh-install.sh
-    - name:  bash wazuh-install.sh --wazuh-indexer node-1
-      shell: bash wazuh-install.sh --wazuh-indexer node-1 --overwrite
-    - name: start index cluster
-      shell: bash wazuh-install.sh --start-cluster
-    - name: Download the Wazuh installation assistant.
-      shell: curl -sO https://packages.wazuh.com/4.4/wazuh-install
-    - name: --wazuh-server
-      shell: bash wazuh-install.sh --wazuh-server wazuh-1 --overwrite
-
-    - name: Download the Wazuh installation assistant
-      shell: curl -sO https://packages.wazuh.com/4.4/wazuh-install.sh
-    - name: --wazuh-dashboard
-      shell: bash wazuh-install.sh --wazuh-dashboard dashboard
-
-    - name: password
-      shell: 'curl -k -u admin:admin https://{{ansible_default_ipv4.address}}'
-      register: pass1
-    - debug:
-        msg: "{{pass1.stdout_lines}}"
