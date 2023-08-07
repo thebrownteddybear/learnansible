@@ -1,0 +1,24 @@
+- 
+  name: play on wazuh
+  hosts: wa 
+  gather_facts: yes
+  vars:
+    dns_test: test
+  tasks:
+
+    - name: Install the GPG key
+      shell: "curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/wazuh.gpg --import && chmod 644 /usr/share/keyrings/wazuh.gpg"
+    - name: Add the repository
+      shell: echo "deb [signed-by=/usr/share/keyrings/wazuh.gpg] https://packages.wazuh.com/4.x/apt/ stable main" | tee -a /etc/apt/sources.list.d/wazuh.list
+    - name: update repo
+      shell: apt-get update
+    - name: use scripting to install wazuh
+      script: ws.sh
+    - name: replace config.yml
+      replace: 
+        path: /root/config.yml
+        regexp: '\<.*\>'
+        replace: "{{ansible_default_ipv4.address}}"
+    - name: create certificates
+      script: cert.sh
+

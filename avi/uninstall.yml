@@ -1,0 +1,18 @@
+- 
+  name: play on wazuh
+  hosts: test 
+  gather_facts: yes
+  vars:
+    dns_test: test
+  tasks:
+    - name: remove dashboard
+      shell: apt-get remove --purge wazuh-dashboard -y
+    - name: remove wazuh server
+      shell: apt-get remove --purge wazuh-manager -y
+    - name: Disable the Wazuh manager service.
+      shell: systemctl disable wazuh-manager; systemctl daemon-reload
+    - name: Remove the Filebeat installation.
+      shell: apt-get remove --purge filebeat -y
+    - name: Uninstall the Wazuh indexer
+      shell: apt-get remove --purge wazuh-indexer -y
+

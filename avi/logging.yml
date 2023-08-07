@@ -1,0 +1,29 @@
+-
+  name: ws
+  hosts: ws
+  tasks:
+    - name: run data cmd
+      command: date
+    - name: shell cmd
+      shell: "uptime -p"
+      register: uptime
+    - name: list last 2 lines of /var/log/messages
+      command: tail -2 /etc/machine-id
+      register: mi
+    - name: add google dns
+      lineinfile:
+        path: /etc/resolv.conf
+        line: 'nameserver 8.8.8.8'
+    - debug:
+        msg: "{{uptime.stdout_lines}} {{mi.stdout_lines}}"
+
+
+
+-
+  name: wa
+  hosts: wa
+  tasks:
+    - name: add google dns
+      lineinfile:
+        path: /etc/resolv.conf
+        line: 'nameserver 8.8.8.8'

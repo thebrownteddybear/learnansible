@@ -1,0 +1,12 @@
+- 
+  name: play on wazuh
+  hosts: lab
+  gather_facts: yes
+  vars:
+    dns_test: test
+  tasks:
+    - name: testmsg
+      shell: echo test
+      register: pass1
+    - debug:
+        msg: "{{pass1.changed}}"

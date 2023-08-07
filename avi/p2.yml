@@ -1,0 +1,7 @@
+-
+  name: ws
+  hosts: ws
+  tasks:
+    - name: run data cmd
+      script: ws.sh
+

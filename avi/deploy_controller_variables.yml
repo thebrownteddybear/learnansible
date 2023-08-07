@@ -1,0 +1,61 @@
+---
+# TEMPLATE FOR CONTROLLER DEPLOYMENT AND CLUSTERING in VMWARE
+
+# Controller Name and IP
+#
+controller_ip_1: "192.168.199.200"
+controller_name_1: "nsxalb-01"
+controller_ip_2: "192.168.199.201"
+controller_name_2: "nsxalb-02"
+controller_ip_3: "192.168.199.202"
+controller_name_3: "nsxalb-03"
+
+# Info for Controller Placement
+con_mgmt_portgroup: "mgt"    # VMware MGMT PortGroup for Controller
+con_mgmt_mask: 255.255.0.0
+con_default_gw: 192.168.18.1
+
+# Cluster IP for Avi Controller
+#
+controller_cluster_vip: 192.168.199.203
+
+# Avi Controller Credentials
+#
+avi_credentials:
+  controller: "{{ controller_cluster_vip }}"
+  username: "admin"
+  password: "nsxalb-password"
+  api_version: "18.2.8"     # Version of Controller
+
+# Controller default password (https://portal.avinetworks.com/)
+#
+old_password: "default-password"
+
+# Vcenter credentials
+#
+vcenter_host: 192.168.254.133
+vcenter_user: administrator@vsphere.local
+vcenter_password: "VMware1!"
+datacenter: lab
+vmware_cluster_name: "c1"
+vmware_datastore: "nfs"
+con_folder: nsxalb_controllers
+
+#Controller Image Location
+#
+ova_path: "/home/user01/controller.ova"
+
+# Avi System Configuration
+#
+# DNS variables
+dns_servers: [ 192.168.254.123, 8.8.8.8 ]
+
+# NTP variables
+ntp_servers: [ '0.us.pool.ntp.org', '1.us.pool.ntp.org', '3.us.pool.ntp.org' ]
+ntp_type: "DNS"  #If servers are hostname use type "DNS", if IP use type "V4"
+
+#Email for admin user (password resets)
+admin_email: test_user@rubber.ducky
+
+# Backup Passphrase (encrypt sensitive fields)
+backup_passphrase: "VMware1!VMware1!"
