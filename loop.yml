@@ -1,0 +1,11 @@
+- name = chec status and mail if down
+  hosts: localhost
+  tasks: 
+    - command: service httpd status
+      register: result
+    - mail:
+        to: admin@me.com
+        subject: servicfe alret
+        body: service down
+        when: result.stdout.find('down') != -1
+

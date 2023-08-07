@@ -24,7 +24,7 @@ controller_cluster_vip: 192.168.199.203
 avi_credentials:
   controller: "{{ controller_cluster_vip }}"
   username: "admin"
-  password: "nsxalb-password"
+  password: "VMware1!VMware1!"
   api_version: "18.2.8"     # Version of Controller
 
 # Controller default password (https://portal.avinetworks.com/)
@@ -37,13 +37,13 @@ vcenter_host: 192.168.254.133
 vcenter_user: administrator@vsphere.local
 vcenter_password: "VMware1!"
 datacenter: lab
-vmware_cluster_name: "c1"
+vmware_cluster_name: "c8"
 vmware_datastore: "nfs"
 con_folder: nsxalb_controllers
 
 #Controller Image Location
 #
-ova_path: "/home/user01/controller.ova"
+ova_path: "/home/root/ctl.ova"
 
 # Avi System Configuration
 #
